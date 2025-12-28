@@ -1,0 +1,31 @@
+.board {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column for mobile */
+  grid-template-areas:
+        "header"
+        "lists";
+  gap: 16px;
+  padding: 16px;
+}
+
+.boardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  grid-area: header;
+}
+
+.listsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust card list width dynamically */
+  gap: 16px;
+  grid-area: lists;
+}
+
+.addButtonWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  grid-column: span 1;
+}

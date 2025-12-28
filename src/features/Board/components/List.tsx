@@ -1,8 +1,9 @@
-import styles from "./List.module.scss";
-import {useState} from "react";
-import Button from "@/components/Button";
-import {Card} from "@/features/Board/components/Card";
+'use client'
 
+import styles from './List.module.scss';
+import { useState } from 'react';
+import Button from '@/components/Button';
+import { Card } from '@/features/Board/components/Card';
 
 export interface ListProps {
     id: string;
@@ -31,7 +32,17 @@ export const List: React.FC<ListProps> = ({
 
     const handleTitleBlur = () => {
         setIsEditingTitle(false);
-        // persist title change later
+        // Persist title change logic here (optional)
+    };
+
+    const handleAddCard = () => {
+        // Add a new card when the button is clicked
+        const newCard = {
+            id: `card-${Date.now()}`,
+            title: 'New Card',
+            commentsCount: 0,
+        };
+        onAddCard(id, newCard);  // Pass the listId and the new card object to the parent
     };
 
     return (
@@ -100,8 +111,8 @@ export const List: React.FC<ListProps> = ({
 
             <Button
                 action="addAnother"
-                size="outsideCard"
-                onClick={() => onAddCard(id)}
+                size="insideCard"
+                onClick={handleAddCard}  // Trigger card addition
             >
                 + Add another card
             </Button>
