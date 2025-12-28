@@ -1,0 +1,51 @@
+/* button.module.scss */
+.button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Variants */
+.primary {
+  background-color: green;
+  color: white;
+}
+
+.error {
+  background-color: red;
+  color: white;
+}
+
+.secondary {
+  background-color: #c9c9c9;
+  color: black;
+}
+
+.default {
+  background-color: transparent;
+  color: black;
+}
+
+/* Sizes */
+.lg {
+  font-size: 18px;
+  padding: 15px 30px;
+}
+
+.md {
+  font-size: 16px;
+  padding: 10px 15px;
+
+}
+
+.insideCard {
+  padding: 5px 10px;
+  background-color: transparent;
+}
+
+.outsideCard {
+  padding: 12px 24px;
+  background-color: rgba(0, 0, 0, 0.12);
+}
