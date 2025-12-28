@@ -5,27 +5,33 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 /* Variants */
 .primary {
-  background-color: green;
+  background-color: #4CAF50; /* Green similar to the image */
   color: white;
 }
 
 .error {
-  background-color: red;
+  background-color: #FF6347; /* Red background */
   color: white;
 }
 
 .secondary {
-  background-color: #c9c9c9;
+  background-color: #E0E0E0; /* Light gray button similar to image */
   color: black;
 }
 
 .default {
   background-color: transparent;
   color: white;
+}
+
+/* Hover effects */
+.button:hover {
+  transform: scale(1.05);
 }
 
 /* Sizes */
@@ -37,7 +43,6 @@
 .md {
   font-size: 16px;
   padding: 10px 15px;
-
 }
 
 .insideCard {
@@ -51,4 +56,5 @@
   padding: 12px 24px;
   background-color: rgba(0, 0, 0, 0.12);
   width: 100%;
+  border-radius: 8px;
 }

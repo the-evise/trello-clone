@@ -1,35 +1,54 @@
 'use client'
 
-import React from "react";
-import styles from "./Card.module.scss";
-import Button from "@/components/Button";
+import {useState} from "react"
+import styles from "./Card.module.scss"
+import Button from "@/components/Button"
+import Modal from "@/components/Modal"
+import {Comment} from "@/features/Board/types/domain";
 
-export interface CardProps {
-    id: string;
-    title: string;
-    commentsCount: number;
-    onOpenComments: (cardId: string) => void;
-    onOpenActions: (cardId: string) => void;
+interface CardProps {
+    id: string,
+    title: string,
+    comments: Comment[],
+    onRequestAddComment: (cardId: string, text: string) => void,
 }
 
-export const Card: React.FC<CardProps> = ({
-                                              id,
-                                              title,
-                                              commentsCount,
-                                              onOpenComments,
-                                              onOpenActions,
-                                          }) => {
+export function Card({
+                         id,
+                         title,
+                         comments,
+                         onRequestAddComment,
+                     }: CardProps) {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+
+
     return (
         <div className={styles.card}>
-            <div className={styles.header}>
+            <header className={styles.header}>
                 <h4 className={styles.title}>{title}</h4>
+                <Button action={"default"} size="md">⋮</Button>
+            </header>
 
-                <Button action={"default"} variant={"default"} size={"md"}>⋮</Button>
-            </div>
+            <footer className={styles.footer}>
+                <Button
+                    action={"default"}
+                    variant="secondary"
+                    size="md"
+                    onClick={() => setIsModalOpen(true)}
+                >
+                    Comments ({comments.length})
+                </Button>
+            </footer>
 
-            <div className={styles.footer}>
-                <Button action={"default"} variant={"secondary"} size={"md"}>Comments ({commentsCount})</Button>
-            </div>
+            {isModalOpen && (
+                <Modal
+                    cardTitle={title}
+                    comments={comments}
+                    onClose={() => setIsModalOpen(false)}
+                    onSubmit={text => onRequestAddComment(id, text)}
+                />
+            )}
         </div>
-    );
-};
+    )
+}

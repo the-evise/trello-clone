@@ -1,11 +1,36 @@
+/* board.module.scss */
 .board {
+  display: block;
+}
+
+.container {
   display: grid;
-  grid-template-columns: 1fr; /* Single column for mobile */
-  grid-template-areas:
-        "header"
-        "lists";
+  //grid-template-columns: 1fr; /* Single column for mobile */
+  grid-template-rows: repeat(2, auto); /* Two rows */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Auto-create columns */
+  //grid-template-areas:
+  //      "header"
+  //      "lists";
   gap: 16px;
   padding: 16px;
+}
+
+.title {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 40px 20px;
+}
+
+.titleInput {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: fit-content;
 }
 
 .boardHeader {
@@ -18,7 +43,7 @@
 
 .listsContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust card list width dynamically */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Dynamic card widths */
   gap: 16px;
   grid-area: lists;
 }

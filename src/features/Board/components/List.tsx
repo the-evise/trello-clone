@@ -1,59 +1,35 @@
 'use client'
 
-import styles from './List.module.scss';
-import { useState } from 'react';
-import Button from '@/components/Button';
-import { Card } from '@/features/Board/components/Card';
+import { useState } from "react"
+import styles from "./List.module.scss"
+import Button from "@/components/Button"
+import { Card as CardView } from "@/features/Board/components/Card"
+import {ListData} from "@/features/Board/types/domain";
 
-export interface ListProps {
-    id: string;
-    title: string;
-    cards: Array<{
-        id: string;
-        title: string;
-        commentsCount: number;
-    }>;
-    onAddCard: (listId: string) => void;
-    onDeleteList: (listId: string) => void;
-    onDeleteAllCards: (listId: string) => void;
+interface ListProps {
+    data: ListData
+    onRequestAddCard: (listId: string) => void
+    onDeleteList: (listId: string) => void
+    onDeleteAllCards: (listId: string) => void
 }
 
-export const List: React.FC<ListProps> = ({
-                                              id,
-                                              title,
-                                              cards,
-                                              onAddCard,
-                                              onDeleteList,
-                                              onDeleteAllCards,
-                                          }) => {
-    const [isEditingTitle, setIsEditingTitle] = useState(false);
-    const [listTitle, setListTitle] = useState(title);
-    const [showActions, setShowActions] = useState(false);
-
-    const handleTitleBlur = () => {
-        setIsEditingTitle(false);
-        // Persist title change logic here (optional)
-    };
-
-    const handleAddCard = () => {
-        // Add a new card when the button is clicked
-        const newCard = {
-            id: `card-${Date.now()}`,
-            title: 'New Card',
-            commentsCount: 0,
-        };
-        onAddCard(id, newCard);  // Pass the listId and the new card object to the parent
-    };
+export function List({
+                         data,
+                         onRequestAddCard,
+                         onDeleteList,
+                         onDeleteAllCards,
+                     }: ListProps) {
+    const [isEditingTitle, setIsEditingTitle] = useState(false)
+    const [showActions, setShowActions] = useState(false)
 
     return (
         <div className={styles.list}>
-            <div className={styles.header}>
+            <header className={styles.header}>
                 {isEditingTitle ? (
                     <input
                         className={styles.titleInput}
-                        value={listTitle}
-                        onChange={(e) => setListTitle(e.target.value)}
-                        onBlur={handleTitleBlur}
+                        defaultValue={data.title}
+                        onBlur={() => setIsEditingTitle(false)}
                         autoFocus
                     />
                 ) : (
@@ -61,61 +37,50 @@ export const List: React.FC<ListProps> = ({
                         className={styles.title}
                         onClick={() => setIsEditingTitle(true)}
                     >
-                        {listTitle}
+                        {data.title}
                     </h3>
                 )}
 
-                <Button
-                    action="default"
-                    size="md"
-                    onClick={() => setShowActions((v) => !v)}
-                >
+                <Button action={"default"} size="md" onClick={() => setShowActions(v => !v)}>
                     ⋮
                 </Button>
 
                 {showActions && (
                     <div className={styles.actionsMenu}>
-                        <Button
-                            action="default"
-                            variant="error"
-                            size="md"
-                            onClick={() => onDeleteList(id)}
-                        >
+                        <Button action={"default"} variant="error" size={"md"} onClick={() => onDeleteList(data.id)}>
                             Delete List
                         </Button>
-
                         <Button
-                            action="default"
-                            variant="error"
+                            action={"default"}
                             size="md"
-                            onClick={() => onDeleteAllCards(id)}
+                            variant="error"
+                            onClick={() => onDeleteAllCards(data.id)}
                         >
                             Delete All Cards
                         </Button>
                     </div>
                 )}
-            </div>
+            </header>
 
             <div className={styles.cards}>
-                {cards.map((card) => (
-                    <Card
+                {data.cards.map(card => (
+                    <CardView
                         key={card.id}
                         id={card.id}
                         title={card.title}
-                        commentsCount={card.commentsCount}
-                        onOpenComments={() => {}}
-                        onOpenActions={() => {}}
-                    />
+                        comments={card.comments} onRequestAddComment={function (cardId: string, text: string): void {
+                        throw new Error("Function not implemented.")
+                    }}                    />
                 ))}
             </div>
 
             <Button
                 action="addAnother"
                 size="insideCard"
-                onClick={handleAddCard}  // Trigger card addition
+                onClick={() => onRequestAddCard(data.id)}
             >
                 + Add another card
             </Button>
         </div>
-    );
-};
+    )
+}

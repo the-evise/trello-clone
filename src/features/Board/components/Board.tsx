@@ -1,85 +1,40 @@
-import React, { useState } from 'react';
-import { List, ListProps } from './List'; // Assuming List is in the same directory
-import styles from './Board.module.scss';
-import Button from "@/components/Button";
+import { List } from "./List"
+import Button from "@/components/Button"
+import {BoardState} from "@/features/Board/types/domain";
+import {useBoard} from "@/features/Board/hooks/useBoard";
+import styles from './Board.module.scss'
 
-interface BoardProps {
-    id: string;
-    title: string;
-    lists: ListProps[];
-}
 
-const Board: React.FC<BoardProps> = ({ id, title, lists }) => {
-    const [boardTitle, setBoardTitle] = useState(title);
-    const [listData, setListData] = useState(lists);
-
-    const handleAddList = () => {
-        const newList = {
-            id: `list-${Date.now()}`,
-            title: 'New List',
-            cards: [],
-            onAddCard: handleAddCard,
-            onDeleteList: handleDeleteList,
-            onDeleteAllCards: handleDeleteAllCards,
-        };
-        setListData([...listData, newList]);
-    };
-
-    const handleAddCard = (listId: string, newCard: { id: string; title: string; commentsCount: number }) => {
-        const updatedLists = listData.map((list) => {
-            if (list.id === listId) {
-                return {
-                    ...list,
-                    cards: [...list.cards, newCard], // Add the new card to the list
-                };
-            }
-            return list;
-        });
-        setListData(updatedLists);  // Update state with the new list data
-    };
-
-    const handleDeleteList = (listId: string) => {
-        setListData(listData.filter((list) => list.id !== listId));
-    };
-
-    const handleDeleteAllCards = (listId: string) => {
-        const updatedLists = listData.map((list) => {
-            if (list.id === listId) {
-                return { ...list, cards: [] };
-            }
-            return list;
-        });
-        setListData(updatedLists);
-    };
+export default function Board({ initialState }: { initialState: BoardState }) {
+    const { state, dispatch } = useBoard(initialState)
 
     return (
         <div className={styles.board}>
-            <div className={styles.boardHeader}>
-                <h2>{boardTitle}</h2>
-            </div>
+            <h2 className={styles.title}>{initialState.title}</h2>
 
-            <div className={styles.listsContainer}>
-                {listData.map((list) => (
+            <div className={styles.container}>
+
+
+                {state.lists.map(list => (
                     <List
                         key={list.id}
-                        {...list}
-                        onAddCard={handleAddCard}  // Pass the function to add a card
+                        data={list}
+                        onRequestAddCard={id =>
+                            dispatch({type: "CARD_ADDED", listId: id})
+                        }
+                        onDeleteList={id =>
+                            dispatch({type: "LIST_DELETED", listId: id})
+                        }
+                        onDeleteAllCards={id =>
+                            dispatch({type: "LIST_CARDS_CLEARED", listId: id})
+                        }
                     />
                 ))}
 
-                {/* The Add Another List Button */}
-                <div className={styles.addButtonWrapper}>
-                    <Button
-                        action="addAnother"
-                        size="outsideCard"
-                        onClick={handleAddList}
-                    >
-                        + Add another list
-                    </Button>
-                </div>
+                <Button action={"addAnother"} size={"outsideCard"} onClick={() => dispatch({type: "LIST_ADDED"})}>
+                    + Add another list
+                </Button>
             </div>
         </div>
-    );
-};
-
-export default Board;
+    )
+}
