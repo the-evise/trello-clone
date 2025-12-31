@@ -9,6 +9,31 @@
   gap: 10px;
 }
 
+.composer {
+  gap: 12px;
+}
+
+.composerInput {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  padding: 8px 10px;
+  font-size: 14px;
+  resize: none;
+  box-sizing: border-box;
+  font-family: inherit;
+  color: #1f2937;
+}
+
+.composerActions {
+  display: flex;
+  gap: 8px;
+}
+
+.dragging {
+  opacity: 0;
+}
+
 .header {
   display: flex;
   align-items: flex-start;

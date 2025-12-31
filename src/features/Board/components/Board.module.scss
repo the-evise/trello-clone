@@ -20,25 +20,27 @@
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
-  margin: 40px 20px;
+  margin: 0;
 }
 
 .titleInput {
   font-size: 24px;
   font-weight: bold;
-  padding: 8px;
+  padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   box-sizing: border-box;
-  width: fit-content;
+  width: 100%;
+  min-width: 260px;
 }
 
 .boardHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 16px;
-  grid-area: header;
+  padding: 24px 20px 8px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .listsContainer {
@@ -46,6 +48,12 @@
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Dynamic card widths */
   gap: 16px;
   grid-area: lists;
+}
+
+.titleActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .addButtonWrapper {

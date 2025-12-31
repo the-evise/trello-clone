@@ -8,6 +8,14 @@
   flex-direction: column;
 }
 
+.listDraggedOver {
+  outline: 2px solid #60a5fa;
+}
+
+.listDragging {
+  opacity: 0;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -84,4 +92,12 @@
     background-color: rgba(0, 0, 0, 0.05);
     border-radius: 6px;
   }
+}
+
+.cardDropZone {
+  height: 16px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px dashed rgba(148, 163, 184, 0.5);
+  background-color: rgba(148, 163, 184, 0.12);
 }

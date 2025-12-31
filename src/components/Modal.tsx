@@ -61,7 +61,7 @@ export default function Modal({
               placeholder="Write a comment…"
               rows={3}
           />
-                    <Button action="default" size="md" onClick={handleSubmit}>
+                    <Button action="default" size="md" variant={"primary"} onClick={handleSubmit}>
                         Add Comment
                     </Button>
                 </footer>
